@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clicker Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        .game-container {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            margin: 5px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>Clicker Game</h1>
+        <button id="clickButton">Click Me!</button>
+        <button id="resetButton">Reset Game</button>
+        <p>Score: <span id="score">0</span></p>
+        <p>Time Left: <span id="timer">30</span> seconds</p>
+        <p class="hidden" id="gameOverMessage">Game Over!</p>
+    </div>
+    <script>
+        let score = 0;
+        let timeLeft = 30;
+        let timerInterval;
+
+        const clickButton = document.getElementById('clickButton');
+        const resetButton = document.getElementById('resetButton');
+        const scoreDisplay = document.getElementById('score');
+        const timerDisplay = document.getElementById('timer');
+        const gameOverMessage = document.getElementById('gameOverMessage');
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerDisplay.textContent = timeLeft;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    clickButton.disabled = true;
+                    gameOverMessage.classList.remove('hidden');
+                }
+            }, 1000);
+        }
+
+        function resetGame() {
+            score = 0;
+            timeLeft = 30;
+            scoreDisplay.textContent = score;
+            timerDisplay.textContent = timeLeft;
+            gameOverMessage.classList.add('hidden');
+            clickButton.disabled = false;
+
+            clearInterval(timerInterval);
+            startTimer();
+        }
+
+        clickButton.addEventListener('click', () => {
+            if (!clickButton.disabled) {
+                score++;
+                scoreDisplay.textContent = score;
+            }
+        });
+
+        resetButton.addEventListener('click', resetGame);
+
+        // Start the game
+        startTimer();
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+    
